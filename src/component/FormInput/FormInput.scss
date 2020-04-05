@@ -1,0 +1,83 @@
+$primary: #11998e;
+$secondary: #38ef7d;
+$white: #fff;
+$gray: #9b9b9b;
+
+.input__field-wrapper {
+    position: relative;
+    padding: 20px 0 0;
+    margin-top: 20px;
+}
+
+.input__field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid $gray;
+    outline: 0;
+    font-size: 1.3rem;
+    color: $white;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+
+    &::placeholder {
+        color: transparent;
+    }
+
+    &:placeholder-shown~.input__label {
+        font-size: 1.3rem;
+        cursor: text;
+        top: 20px;
+    }
+
+    &:required,
+    &:invalid {
+        box-shadow: none;
+    }
+}
+
+.input__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: $gray;
+    text-transform: capitalize;
+}
+
+.input__field:focus {
+    ~.input__label {
+        position: absolute;
+        top: 0;
+        display: block;
+        transition: 0.2s;
+        font-size: 1rem;
+        color: $primary;
+        font-weight: 700;
+    }
+
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, $primary, $secondary);
+    border-image-slice: 1;
+}
+
+.input__helper-txt {
+    &--error {
+        color: #dd6e42;
+    }
+
+    &__wrapper {
+        display: none;
+
+        &--show {
+            display: flex;
+            justify-content: flex-start;
+            font-size: 16px;
+            ;
+        }
+    }
+}

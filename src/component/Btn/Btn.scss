@@ -1,0 +1,12 @@
+.btn {
+    background-color: #dd6e42;
+    padding: 15px 30px;
+    border-radius: 35px;
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+    margin: 10px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
