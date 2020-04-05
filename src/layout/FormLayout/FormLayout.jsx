@@ -14,7 +14,9 @@ class FormLayout extends React.Component {
       link: "",
       ashtag: "",
       selectedCittaObj: { nome: "", id: "" },
-      selectedCategoriaObj: { nome: "", id: "" }
+      selectedCategoriaObj: { nome: "", id: "" },
+      fromDate: "",
+      toDate: ""
       // categoria: ""
     };
     this.handleInput = this.handleInput.bind(this);
@@ -47,7 +49,9 @@ class FormLayout extends React.Component {
       link,
       ashtag,
       selectedCittaObj,
-      selectedCategoriaObj
+      selectedCategoriaObj,
+      fromDate,
+      toDate
     } = this.state;
     return (
       <div>
@@ -67,6 +71,8 @@ class FormLayout extends React.Component {
           selectCategoria={this.selectCategoria}
           listaArrCitta={CITTA}
           listaArrCategorie={CATEGORIE}
+          fromDate={fromDate}
+          toDate={toDate}
         />
       </div>
     );

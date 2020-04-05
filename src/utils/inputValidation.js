@@ -5,6 +5,17 @@ export const isEmailFormat = (input) => {
   return regex.test(input);
 };
 
-export const isDateFormat = (input) => {
-  return moment(input, 'DD/MM/YYYY', true).isValid();
+export const isDateFormat = (input, format) => {
+  const anno = moment(input, format, true).year();
+  console.log('input', anno, input)
+  if (input.length > 9) {
+    if (anno < 2019 || anno > 2050) {
+      return false;
+    }
+    return moment(input, format, true).isValid();
+  }
+
+
+  return true;
+
 };

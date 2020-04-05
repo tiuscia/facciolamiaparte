@@ -15,7 +15,9 @@ const Form = ({
   listaArrCitta,
   listaArrCategorie,
   selectedCategoriaObj,
-  selectCategoria
+  selectCategoria,
+  fromDate,
+  toDate
 }) => (
   <div className="form">
     <div className="form__input-wrapper">
@@ -63,6 +65,22 @@ const Form = ({
         selectItem={selectCitta}
         defaultTxt="Seleziona città"
         listArr={listaArrCitta}
+      />
+      <FormInput
+        type="text"
+        placeholder="GG/MM/AAAA"
+        isDate="DD/MM/YYYY"
+        name="Data Inizio (GG/MM/AAAA)"
+        inputValue={fromDate}
+        getValueFromInput={handleInput}
+      />
+      <FormInput
+        type="text"
+        placeholder="GG/MM/AAAA"
+        isDate="DD/MM/YYYY"
+        name="Data Fine (GG/MM/AAAA)"
+        inputValue={toDate}
+        getValueFromInput={handleInput}
       />
     </div>
     <Btn text="invia" type="submit" />
