@@ -1,5 +1,24 @@
 .form {
     &__input-wrapper {
+        margin-top: 40px;
         margin-bottom: 50px;
+    }
+
+    &__error {
+        color: #dd6e42;
+
+        span {
+            display: block;
+            font-size: 16px;
+        }
+    }
+
+    button {
+        margin-top: 40px;
+        width: 100%;
+        font-size: unset;
+        color: unset;
+        border: unset;
+        background: unset;
     }
 }

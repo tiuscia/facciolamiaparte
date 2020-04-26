@@ -3,20 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import * as firebase from "firebase/app";
+import firebase from "firebase";
 import "./style/global.scss";
 
-var firebaseConfig = {
-  apiKey: "AIzaSyAmz5sbQot5U1angPPF5UyKzznooBBp_6c",
-  authDomain: "facciolamiaparte-c9cec.firebaseapp.com",
-  databaseURL: "https://facciolamiaparte-c9cec.firebaseio.com",
-  projectId: "facciolamiaparte-c9cec",
-  storageBucket: "facciolamiaparte-c9cec.appspot.com",
-  messagingSenderId: "852527221872",
-  appId: "1:852527221872:web:384f504b38a62fd838b8b5",
-  measurementId: "G-4KVGGCZP4Z"
-};
-firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+auth.signInAnonymously();
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

@@ -22,15 +22,15 @@ const CATEGORIE = [{
     },
     {
         "id": "8",
-        "nome": "Consegna a domicilio"
+        "nome": "consegna a domicilio"
     },
     {
         "id": "9",
-        "nome": "Cucina"
+        "nome": "cucina"
     },
     {
         "id": "10",
-        "nome": "Flashmob"
+        "nome": "flashmob"
     },
     {
         "id": "11",
@@ -38,7 +38,7 @@ const CATEGORIE = [{
     },
     {
         "id": "12",
-        "nome": "Altro"
+        "nome": "altro"
     },
 ];
 

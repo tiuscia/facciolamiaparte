@@ -185,7 +185,7 @@ class FormInput extends React.Component {
               name={name}
               autoComplete={autocomplete}
               onKeyPress={onKeyPress}
-              required={required}
+              required={isRequired}
               onChange={this.handleInputChange}
               onBlur={this.handleOnBlur}
               value={inputValue || inputTxt}
@@ -200,7 +200,7 @@ class FormInput extends React.Component {
               name={name}
               autoComplete={autocomplete}
               onKeyPress={onKeyPress}
-              required={required}
+              required={isRequired}
               onChange={this.handleInputChange}
               onBlur={this.handleOnBlur}
               value={inputValue || inputTxt}
@@ -209,7 +209,7 @@ class FormInput extends React.Component {
             />
           )}
 
-          <label className="input__label">{name}</label>
+          <label className="input__label">{placeholder}</label>
         </div>
         {isRequired && !inputTxt && (
           <div

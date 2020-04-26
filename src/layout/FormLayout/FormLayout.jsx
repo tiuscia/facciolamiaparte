@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import Header from "../../component/Header/Header.jsx";
 import Form from "../../component/Form/Form.jsx";
 import CITTA from "../../utils/cittas.js";
@@ -16,15 +17,62 @@ class FormLayout extends React.Component {
       selectedCittaObj: { nome: "", id: "" },
       selectedCategoriaObj: { nome: "", id: "" },
       fromDate: "",
-      toDate: ""
-      // categoria: ""
+      toDate: "",
+      dateError: false,
+      requiredError: false
     };
     this.handleInput = this.handleInput.bind(this);
     this.selectCitta = this.selectCitta.bind(this);
     this.selectCategoria = this.selectCategoria.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
 
   componentDidMount() {}
+
+  submitForm = event => {
+    // reset
+    this.setState({ requiredError: false });
+    this.setState({ dateError: false });
+
+    event.preventDefault();
+    // const {
+    //   titolo,
+    //   descrizione,
+    //   link,
+    //   ashtag,
+    //   selectedCittaObj,
+    //   selectedCategoriaObj,
+    //   fromDate,
+    //   toDate
+    // } = this.state;
+    this.checkDate();
+    this.checkRequired();
+  };
+
+  checkRequired() {
+    const {
+      titolo,
+      descrizione,
+      ashtag,
+      selectedCittaObj,
+      selectedCategoriaObj
+    } = this.state;
+    if (
+      titolo === "" ||
+      descrizione === "" ||
+      selectedCittaObj.id === "" ||
+      selectedCategoriaObj.id === "" ||
+      (selectedCategoriaObj.nome === "ashtag" && ashtag === "")
+    ) {
+      this.setState({ requiredError: true });
+    }
+  }
+
+  checkDate() {
+    const { fromDate, toDate } = this.state;
+    const isCorrectDates = moment(fromDate).isSameOrBefore(toDate);
+    this.setState({ dateError: !isCorrectDates });
+  }
 
   selectCitta(nomeCitta, idCitta) {
     let selected = { nome: nomeCitta, id: idCitta };
@@ -51,7 +99,9 @@ class FormLayout extends React.Component {
       selectedCittaObj,
       selectedCategoriaObj,
       fromDate,
-      toDate
+      toDate,
+      requiredError,
+      dateError
     } = this.state;
     return (
       <div>
@@ -73,6 +123,9 @@ class FormLayout extends React.Component {
           listaArrCategorie={CATEGORIE}
           fromDate={fromDate}
           toDate={toDate}
+          submitForm={this.submitForm}
+          dateError={dateError}
+          requiredError={requiredError}
         />
       </div>
     );

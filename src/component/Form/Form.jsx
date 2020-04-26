@@ -17,13 +17,16 @@ const Form = ({
   selectedCategoriaObj,
   selectCategoria,
   fromDate,
-  toDate
+  toDate,
+  submitForm,
+  dateError,
+  requiredError
 }) => (
   <div className="form">
-    <div className="form__input-wrapper">
+    <form className="form__input-wrapper" onSubmit={submitForm}>
       <FormInput
         type="text"
-        placeholder="Inserisci il titolo"
+        placeholder="titolo"
         name="titolo"
         isRequired
         isMaxLength="50"
@@ -32,7 +35,7 @@ const Form = ({
       />
       <FormInput
         type="textarea"
-        placeholder="Inserisci una breve descrizione"
+        placeholder="descrizione"
         name="descrizione"
         isRequired
         inputValue={descrizione}
@@ -40,7 +43,7 @@ const Form = ({
       />
       <FormInput
         type="text"
-        placeholder="Inserisci url"
+        placeholder="link"
         name="link"
         inputValue={link}
         getValueFromInput={handleInput}
@@ -54,7 +57,7 @@ const Form = ({
       {selectedCategoriaObj && selectedCategoriaObj.nome === "ashtag" && (
         <FormInput
           type="text"
-          placeholder="Inserisci #ashtag"
+          placeholder="#ashtag"
           name="#ashtag"
           inputValue={ashtag}
           getValueFromInput={handleInput}
@@ -68,22 +71,46 @@ const Form = ({
       />
       <FormInput
         type="text"
-        placeholder="GG/MM/AAAA"
+        placeholder="Data Inizio (GG/MM/AAAA)"
         isDate="DD/MM/YYYY"
-        name="Data Inizio (GG/MM/AAAA)"
+        name="fromDate"
         inputValue={fromDate}
         getValueFromInput={handleInput}
       />
       <FormInput
         type="text"
-        placeholder="GG/MM/AAAA"
+        placeholder="Data Fine (GG/MM/AAAA)"
         isDate="DD/MM/YYYY"
-        name="Data Fine (GG/MM/AAAA)"
+        name="toDate"
         inputValue={toDate}
         getValueFromInput={handleInput}
       />
-    </div>
-    <Btn text="invia" type="submit" />
+      <div className="form__error">
+        {requiredError && <span>* Compilare tutti i campi obbligatori: </span>}
+        {requiredError && !titolo && <span>il titolo è richiesto</span>}
+        {requiredError && !descrizione && (
+          <span>la descrizione è richiesta</span>
+        )}
+        {requiredError && !selectedCategoriaObj.id && (
+          <span>La categoria è richiesta</span>
+        )}
+        {requiredError && !selectedCittaObj.id && (
+          <span>La cittá è richiesta</span>
+        )}
+        {requiredError && selectedCategoriaObj.nome === "ashtag" && !ashtag && (
+          <span>Il campo ashtag è richiesto</span>
+        )}
+        {dateError && fromDate && toDate && (
+          <span>
+            Controllare che la data inizio sia antecedente o uguale a quella di
+            fine
+          </span>
+        )}
+      </div>
+      <button type="submit">
+        <Btn text="invia" />
+      </button>
+    </form>
   </div>
 );
 
