@@ -5,14 +5,14 @@ import 'firebase/firestore';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAmz5sbQot5U1angPPF5UyKzznooBBp_6c",
-    authDomain: "facciolamiaparte-c9cec.firebaseapp.com",
-    databaseURL: "https://facciolamiaparte-c9cec.firebaseio.com",
-    projectId: "facciolamiaparte-c9cec",
-    storageBucket: "facciolamiaparte-c9cec.appspot.com",
-    messagingSenderId: "852527221872",
-    appId: "1:852527221872:web:384f504b38a62fd838b8b5",
-    measurementId: "G-4KVGGCZP4Z"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
+    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
