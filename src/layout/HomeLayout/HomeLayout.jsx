@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../../component/Header/Header.jsx";
 import TwoBtns from "../../component/TwoBtns/TwoBtns.jsx";
+import ListaFilter from '../../component/ListaFilter/ListaFilter.jsx';
 import ListaLayout from "../ListaLayout/ListaLayout.jsx";
 import "./HomeLayout.scss";
 
@@ -20,8 +21,8 @@ Inseriscili aggiungendo una nuova voce alla nostra lista.
 
 “La curiosità può vincere la paura ancor più di quanto possa fare il coraggio” James Stephens"/>
       <TwoBtns />
-      <div>here there will be the filter</div>
-<ListaLayout />
+      <ListaFilter />
+      <ListaLayout />
     </div>
   );
 };

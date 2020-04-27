@@ -35,16 +35,6 @@ class FormLayout extends React.Component {
     this.setState({ dateError: false });
 
     event.preventDefault();
-    // const {
-    //   titolo,
-    //   descrizione,
-    //   link,
-    //   ashtag,
-    //   selectedCittaObj,
-    //   selectedCategoriaObj,
-    //   fromDate,
-    //   toDate
-    // } = this.state;
     this.checkDate();
     this.checkRequired();
   };
