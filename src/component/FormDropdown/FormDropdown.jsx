@@ -6,7 +6,7 @@ class FormDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
+      isOpen: false,
     };
 
     this.toggleList = this.toggleList.bind(this);
@@ -15,12 +15,12 @@ class FormDropdown extends React.Component {
 
   handleClickOutside() {
     this.setState({
-      isOpen: false
+      isOpen: false,
     });
   }
   toggleList() {
-    this.setState(prevState => ({
-      isOpen: !prevState.isOpen
+    this.setState((prevState) => ({
+      isOpen: !prevState.isOpen,
     }));
   }
 
@@ -45,7 +45,7 @@ class FormDropdown extends React.Component {
                 : "dropdown__header-title--selected"
             }`}
           >
-            {selectedObj.id && selectedObj.id !== "undefined"
+            {selectedObj && selectedObj.id && selectedObj.id !== "undefined"
               ? selectedObj.nome
               : defaultTxt}
           </div>
@@ -62,7 +62,7 @@ class FormDropdown extends React.Component {
         </div>
         {isOpen && (
           <ul className="dropdown__list">
-            {listArr.map(item => (
+            {listArr.map((item) => (
               // <span>{console.log(item)}</span>
               <li
                 className={`dropdown__list-item dropdown__list-item${

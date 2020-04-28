@@ -1,9 +1,8 @@
-import React , { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
 import "./ListaRisultati.scss";
 
-const ListaRisultati = () => {
-
+const ListaRisultati = ({ isLoading, itemsList }) => {
   // get data once
   // let allEntities;
   // const listaRef = db.collection("aggratis");
@@ -18,56 +17,58 @@ const ListaRisultati = () => {
   //     console.log('no data');
   //   }
   // });
- 
-  const [ itemList, setItemList ] = useState([]);
-  const [ isLoading, setIsLoadingt ] = useState(true);
 
-  useEffect( () => {
-    const listaRef = db.collection('aggratis');
+  // const [itemsList, setItemsList] = useState([]);
+  // const [isLoading, setIsLoadingt] = useState(true);
 
-    listaRef.onSnapshot( snapshot => {
-        const data = [];
-        console.log(data);
+  // useEffect(() => {
+  //   const listaRef = db.collection("aggratis");
 
-        snapshot.forEach( doc => {
-            data.push({...doc.data(), id: doc.id})
-        });
-        setItemList(data);
-        setIsLoadingt(false);
-    })
-}, [])
+  //   listaRef.onSnapshot((snapshot) => {
+  //     const data = [];
+  //     console.log(data);
 
+  //     snapshot.forEach((doc) => {
+  //       data.push({ ...doc.data(), id: doc.id });
+  //     });
+  //     setItemsList(data);
+  //     setIsLoadingt(false);
+  //   });
+  // }, []);
 
   return (
     <div className="lista-layout">
-      {isLoading && <span>...is loading</span> }
-    <ul>
-      {itemList && itemList.length > 0 && itemList.map((item) => (
-      <li key={item.id}>
-        <div className="lista-layout__item">
-      {item.link && (<a href={`${item.link}`}>{item.titolo}</a>)}
-          
-          {!item.link && (
-            <span>{item.titolo}</span>)
-          }
-          <div className="lista-layout__item-info">
-            <span>{item.citta.nome}</span> | <span className="lista-layout__item-label">da</span>  {item.fromDate} <span className="lista-layout__item-label">a</span> {item.toDate}
-          </div>
-          <div className="lista-layout__item-info">
-          {item.link && (<a href={`${item.link}`}>link al sito</a>)} 
-          {item.ashtag && (
-            <>
-            <span className="lista-layout__item-label">ashtag:</span>
-              {item.ashtag}
-            </>)
-            }
-          </div>
-          <div>{item.descrizione}</div>
-        </div>
-      </li>
-      ))}
+      {isLoading && <span>...is loading</span>}
+      <ul>
+        {itemsList &&
+          itemsList.length > 0 &&
+          itemsList.map((item) => (
+            <li key={item.id}>
+              <div className="lista-layout__item">
+                {item.link && <a href={`${item.link}`}>{item.titolo}</a>}
 
-    </ul>
+                {!item.link && <span>{item.titolo}</span>}
+                <div className="lista-layout__item-info">
+                  <span>{item.citta.nome}</span> |{" "}
+                  <span className="lista-layout__item-label">da</span>{" "}
+                  {item.fromDate}{" "}
+                  <span className="lista-layout__item-label">a</span>{" "}
+                  {item.toDate}
+                </div>
+                <div className="lista-layout__item-info">
+                  {item.link && <a href={`${item.link}`}>link al sito</a>}
+                  {item.ashtag && (
+                    <>
+                      <span className="lista-layout__item-label">ashtag:</span>
+                      {item.ashtag}
+                    </>
+                  )}
+                </div>
+                <div>{item.descrizione}</div>
+              </div>
+            </li>
+          ))}
+      </ul>
     </div>
   );
 };
