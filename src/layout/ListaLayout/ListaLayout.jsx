@@ -56,7 +56,7 @@ const ListaLayout = () => {
 
     let listaRef = db.collection("aggratis");
     let queryRef;
-    console.log();
+    // citta
     if (filterData && filterData.citta && filterData.citta.nome) {
       queryRef = listaRef.where(
         "citta.nome",
@@ -64,6 +64,7 @@ const ListaLayout = () => {
         filterData.citta.nome.toLowerCase()
       );
     }
+    // input parola chiave
     if (filterData && filterData.keyword) {
       queryRef = listaRef.where(
         "titolo",
@@ -71,6 +72,7 @@ const ListaLayout = () => {
         filterData.keyword.toLowerCase()
       );
     }
+    // categoria
     if (filterData && filterData.categoria && filterData.categoria.nome) {
       queryRef = listaRef.where(
         "categoria.nome",
