@@ -8,10 +8,11 @@ import "./FormInput.scss";
 
 // HOW TO USE IT
 /* <Input
-      type="text"
+      type="text" || "textarea"
       placeholder={'string'}
       autocomplete="username"
       name="username"
+      inputValue
       onInputChange={something()} // optional
       isRequired // optional
       isEmail // optional
@@ -26,7 +27,7 @@ class FormInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputTxt: "",
+      // inputTxt: "",
       errors: {
         required: {
           error: false,
@@ -119,50 +120,50 @@ class FormInput extends React.Component {
       getValueFromInput(evt);
     }
 
-    this.setState({ inputTxt: evt.target.value }, () => {
-      const { inputTxt } = this.state;
-      if (inputTxt) {
-        this.setErrorState(false, "required");
-      }
+    // this.setState({ inputTxt: evt.target.value }, () => {
+    //   const { inputTxt } = this.state;
+    if (evt.target.value) {
+      this.setErrorState(false, "required");
+    }
 
-      if (isEmail && inputTxt && isEmailFormat(inputTxt)) {
-        this.setErrorState(false, "email");
-      }
+    if (isEmail && evt.target.value && isEmailFormat(evt.target.value)) {
+      this.setErrorState(false, "email");
+    }
 
-      if (isMaxLength) {
-        this.checkMaxLength(isMaxLength, inputTxt);
-      }
+    if (isMaxLength) {
+      this.checkMaxLength(isMaxLength, evt.target.value);
+    }
 
-      if (isMinLength) {
-        this.checkMinLength(isMinLength, inputTxt);
-      }
+    if (isMinLength) {
+      this.checkMinLength(isMinLength, evt.target.value);
+    }
 
-      if (isDate && isDateFormat(inputTxt, isDate)) {
-        this.setErrorState(false, "date");
-      }
+    if (isDate && isDateFormat(evt.target.value, isDate)) {
+      this.setErrorState(false, "date");
+    }
 
-      if (onInputChange && inputTxt) onInputChange(inputTxt);
-    });
+    if (onInputChange) onInputChange(evt.target.value);
+    // });
   };
 
-  handleOnBlur = () => {
-    const { inputTxt } = this.state;
+  handleOnBlur = (evt) => {
+    // const { inputTxt } = this.state;
     const { isRequired, isEmail, isDate, isURL } = this.props;
     // isRequired validation
-    if (isRequired && !inputTxt) {
+    if (isRequired && !evt.target.value) {
       const newStateCopy = { ...this.state };
       newStateCopy.errors.required.error = true;
       this.setState(newStateCopy);
     }
     // isEmail validation
-    this.checkEmail(isEmail, inputTxt);
+    this.checkEmail(isEmail, evt.target.value);
     // isDate validation
     if (isDate) {
-      this.checkDate(isDate, inputTxt);
+      this.checkDate(isDate, evt.target.value);
     }
     // isURL validation
     if (isURL) {
-      this.checkURL(inputTxt);
+      this.checkURL(evt.target.value);
     }
   };
 
@@ -181,7 +182,7 @@ class FormInput extends React.Component {
       isURL,
     } = this.props;
     const {
-      inputTxt,
+      // inputTxt,
       errors: { required, email, maxLength, date, url },
     } = this.state;
 
@@ -204,7 +205,7 @@ class FormInput extends React.Component {
               required={isRequired}
               onChange={this.handleInputChange}
               onBlur={this.handleOnBlur}
-              value={inputValue || inputTxt}
+              value={inputValue || ""}
               id={name}
             />
           )}
@@ -219,7 +220,7 @@ class FormInput extends React.Component {
               required={isRequired}
               onChange={this.handleInputChange}
               onBlur={this.handleOnBlur}
-              value={inputValue || inputTxt}
+              value={inputValue || ""}
               id={name}
               rows="3"
             />
@@ -227,7 +228,7 @@ class FormInput extends React.Component {
 
           <label className="input__label">{placeholder}</label>
         </div>
-        {isRequired && !inputTxt && (
+        {isRequired && !inputValue && (
           <div
             className={`input__helper-txt__wrapper${
               required.error ? "--show" : ""
@@ -244,7 +245,7 @@ class FormInput extends React.Component {
         {isEmail && (
           <div
             className={`input__helper-txt__wrapper ${
-              inputTxt && email.error ? "--show" : ""
+              inputValue && email.error ? "--show" : ""
             }`}
           >
             <span className="input__helper-txt--error">{isEmail.errorMsg}</span>
@@ -253,7 +254,7 @@ class FormInput extends React.Component {
         {isMaxLength && (
           <div
             className={`input__helper-txt__wrapper ${
-              inputTxt && maxLength.error ? "--show" : ""
+              inputValue && maxLength.error ? "--show" : ""
             }`}
           >
             {maxLength.error && (
@@ -279,7 +280,7 @@ class FormInput extends React.Component {
         {isDate && (
           <div
             className={`input__helper-txt__wrapper${
-              inputTxt && date.error ? "--show" : ""
+              inputValue && date.error ? "--show" : ""
             }`}
           >
             <span className="input__helper-txt--error">
@@ -290,7 +291,7 @@ class FormInput extends React.Component {
         {isURL && (
           <div
             className={`input__helper-txt__wrapper${
-              inputTxt && url.error ? "--show" : ""
+              inputValue && url.error ? "--show" : ""
             }`}
           >
             <span className="input__helper-txt--error">

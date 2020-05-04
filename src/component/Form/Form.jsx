@@ -113,6 +113,9 @@ const Form = ({
             fine
           </span>
         )}
+        {dateError && !fromDate && toDate && (
+          <span>Ai ai ai non hai inserito da la data di inizio!</span>
+        )}
       </div>
       <button type="submit">
         <Btn text="invia" />

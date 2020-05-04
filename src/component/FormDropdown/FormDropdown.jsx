@@ -35,7 +35,12 @@ class FormDropdown extends React.Component {
     const { selectedObj, defaultTxt, listArr } = this.props;
     return (
       <div className="dropdown">
-        <div className="dropdown__header" onClick={() => this.toggleList()}>
+        <div
+          className={`dropdown__header ${
+            isOpen ? "dropdown__header--open" : ""
+          }`}
+          onClick={() => this.toggleList()}
+        >
           <div
             className={`dropdown__header-title ${
               !selectedObj ||
