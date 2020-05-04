@@ -81,7 +81,7 @@ const Form = ({
         name="fromDate"
         inputValue={fromDate}
         getValueFromInput={handleInput}
-        onInputChange={isDateFromValidAction}
+        // onInputChange={isDateFromValidAction}
       />
       <FormInput
         type="text"
@@ -90,7 +90,7 @@ const Form = ({
         name="toDate"
         inputValue={toDate}
         getValueFromInput={handleInput}
-        onInputChange={isDateToValidAction}
+        // onInputChange={isDateToValidAction}
       />
       <div className="form__error">
         {requiredError && <span>* Compilare tutti i campi obbligatori: </span>}

@@ -141,7 +141,7 @@ class FormInput extends React.Component {
         this.setErrorState(false, "date");
       }
 
-      if (onInputChange) onInputChange(inputTxt);
+      if (onInputChange && inputTxt) onInputChange(inputTxt);
     });
   };
 

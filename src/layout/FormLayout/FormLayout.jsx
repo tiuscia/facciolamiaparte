@@ -21,8 +21,7 @@ class FormLayout extends React.Component {
       selectedCategoriaObj: { nome: "", id: "" },
       fromDate: "",
       toDate: "",
-      dateFromError: false,
-      dateToError: false,
+      dateFormatError: false,
       dateError: false,
       urlError: false,
       requiredError: false,
@@ -31,45 +30,58 @@ class FormLayout extends React.Component {
     this.selectCitta = this.selectCitta.bind(this);
     this.selectCategoria = this.selectCategoria.bind(this);
     this.isUrlValidAction = this.isUrlValidAction.bind(this);
-    this.isDateToValidAction = this.isDateToValidAction(this);
-    this.isDateFromValidAction = this.isDateFromValidAction(this);
+    // this.isDateToValidAction = this.isDateToValidAction(this);
+    // this.isDateFromValidAction = this.isDateFromValidAction(this);
     this.submitForm = this.submitForm.bind(this);
   }
 
-  // componentDidMount() {}
-
   submitForm = (event) => {
+    event.preventDefault();
     const {
       selectedCittaObj,
       selectedCategoriaObj,
       titolo,
       descrizione,
       ashtag,
+      fromDate,
+      toDate,
     } = this.state;
-    event.preventDefault();
 
-    console.log("before reset");
-    console.log("state before", { ...this.state });
-
-    // reset
+    // reset errors
     this.setState(
-      { requiredError: false, dateError: false, urlError: false },
+      {
+        requiredError: false,
+        dateError: false,
+        urlError: false,
+        dateFormatError: false,
+      },
       () => {
-        console.log("inside reset");
-        console.log("state after", { ...this.state });
+        console.log("state after error reset", { ...this.state });
         // TODO optimize and get error from input
-        // TODO use a function that returns a boolean instead of editing the state
         if (
+          // check required
           titolo === "" ||
           descrizione === "" ||
           selectedCittaObj.id === "" ||
           selectedCategoriaObj.id === "" ||
           (selectedCategoriaObj.nome === "ashtag" && ashtag === "")
         ) {
+          console.log("REQUIRED SBAGLIATOOOOOOO", fromDate, toDate);
           this.setState({ requiredError: true });
+        } else if (
+          (fromDate && !isDateFormat(fromDate, "DD/MM/YYYY")) ||
+          (toDate && !isDateFormat(toDate, "DD/MM/YYYY"))
+        ) {
+          // check date format
+          console.log("DATE FORMAT SBAGLIATOOOOOOO", fromDate, toDate);
+          this.setState({ dateFormatError: true });
         } else if (!this.checkDate()) {
+          // check required order
+          console.log("DATE ORDER SBAGLIATOOOOOOO", fromDate, toDate);
           this.setState({ dateError: true });
         } else {
+          // good to go
+          console.log("GOOD TO GO");
           const newStateCopy = { ...this.state };
           if (!newStateCopy.requiredError && !newStateCopy.dateError) {
             this.sendData();
@@ -110,17 +122,38 @@ class FormLayout extends React.Component {
       .add(dataToSend)
       .then((ref) => {
         console.log("Added document with ID: ", ref.id);
+        this.resetState();
       });
 
     console.log("listaRef dati inviati", listaRef);
   }
 
+  resetState() {
+    this.setState({
+      titolo: "",
+      descrizione: "",
+      link: "",
+      ashtag: "",
+      selectedCittaObj: { nome: "", id: "" },
+      selectedCategoriaObj: { nome: "", id: "" },
+      fromDate: "",
+      toDate: "",
+      dateFormatError: false,
+      dateError: false,
+      urlError: false,
+      requiredError: false,
+    });
+  }
+
   checkDate() {
     const { fromDate, toDate } = this.state;
-    if (fromDate && toDate) {
+    if (fromDate !== "" && toDate !== "") {
       return moment(fromDate).isSameOrBefore(toDate);
     }
-    return false;
+    if (fromDate === "" && toDate !== "") {
+      return false;
+    }
+    return true;
   }
 
   selectCitta(nomeCitta, idCitta) {
@@ -131,21 +164,6 @@ class FormLayout extends React.Component {
   selectCategoria(nomeCategoria, idCategoria) {
     let selected = { nome: nomeCategoria, id: idCategoria };
     this.setState({ selectedCategoriaObj: selected });
-  }
-
-  isDateFromValidAction(inputFromDate) {
-    if (inputFromDate && !isDateFormat(inputFromDate, "DD/MM/YYYY")) {
-      this.setState({ dateFromError: true });
-    } else {
-      this.setState({ dateFromError: false });
-    }
-  }
-  isDateToValidAction(inputToDate) {
-    if (inputToDate && !isDateFormat(inputToDate, "DD/MM/YYYY")) {
-      this.setState({ dateToError: true });
-    } else {
-      this.setState({ dateToError: false });
-    }
   }
 
   isUrlValidAction(input) {
@@ -199,8 +217,6 @@ class FormLayout extends React.Component {
           dateError={dateError}
           requiredError={requiredError}
           isUrlValidAction={this.isUrlValidAction}
-          isDateToValidAction={this.isDateToValidAction}
-          isDateFromValidAction={this.isDateFromValidAction}
         />
       </div>
     );
