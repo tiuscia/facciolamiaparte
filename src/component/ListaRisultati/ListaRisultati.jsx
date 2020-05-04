@@ -39,33 +39,53 @@ const ListaRisultati = ({ isLoading, itemsList }) => {
   return (
     <div className="lista-layout">
       {isLoading && <span>...is loading</span>}
+      {!isLoading && itemsList.length === 0 && (
+        <div className="lista-layout__no-result">nessun risultato</div>
+      )}
+
       <ul>
         {itemsList &&
           itemsList.length > 0 &&
           itemsList.map((item) => (
-            <li key={item.id}>
-              <div className="lista-layout__item">
-                {item.link && <a href={`${item.link}`}>{item.titolo}</a>}
-
-                {!item.link && <span>{item.titolo}</span>}
-                <div className="lista-layout__item-info">
-                  <span>{item.citta.nome}</span> |{" "}
-                  <span className="lista-layout__item-label">da</span>{" "}
-                  {item.fromDate}{" "}
-                  <span className="lista-layout__item-label">a</span>{" "}
-                  {item.toDate}
-                </div>
-                <div className="lista-layout__item-info">
-                  {item.link && <a href={`${item.link}`}>link al sito</a>}
-                  {item.ashtag && (
-                    <>
-                      <span className="lista-layout__item-label">ashtag:</span>
-                      {item.ashtag}
-                    </>
-                  )}
-                </div>
-                <div>{item.descrizione}</div>
+            <li className="lista-layout__singolo-risultato" key={item.id}>
+              {item.link && (
+                <a
+                  className="lista-layout__titolo-risultato"
+                  href={`${item.link}`}
+                >
+                  {item.titolo}
+                </a>
+              )}
+              {!item.link && (
+                <span className="lista-layout__titolo-risultato">
+                  {item.titolo}
+                </span>
+              )}
+              <div className="lista-layout__item-info">
+                <span>{item.citta.nome}</span> |{" "}
+                {item.fromDate && (
+                  <>
+                    <span className="lista-layout__item-label">da</span>{" "}
+                    <span>{item.fromDate}</span>
+                  </>
+                )}{" "}
+                {item.toDate && (
+                  <>
+                    <span className="lista-layout__item-label">a</span>{" "}
+                    <span>{item.toDate}</span>
+                  </>
+                )}
               </div>
+              <div className="lista-layout__item-more-info">
+                {item.link && <a href={`${item.link}`}>link al sito</a>}{" "}
+                {item.ashtag && (
+                  <>
+                    <span className="lista-layout__item-label">ashtag:</span>{" "}
+                    {item.ashtag}
+                  </>
+                )}
+              </div>
+              <div>{item.descrizione}</div>
             </li>
           ))}
       </ul>

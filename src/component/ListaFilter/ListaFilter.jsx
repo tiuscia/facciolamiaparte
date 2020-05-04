@@ -8,13 +8,13 @@ const ListaFilter = (props) => {
 
   return (
     <div className="lista-filter">
-      <h2>qui i filtri</h2>
+      <h2>Filtra i risultati: </h2>
       <FormInput
         type="text"
         placeholder="cerca..."
         name="keyword"
         inputValue={props.keyword}
-        getValueFromInput={props.onKeywordChange}
+        getValueFromInput={props.handleInput}
       />
       <FormDropdown
         selectedObj={props.cateria}
@@ -27,6 +27,14 @@ const ListaFilter = (props) => {
         selectItem={props.selectCitta}
         defaultTxt="Seleziona citta"
         listArr={props.listaArrCitta}
+      />
+      <FormInput
+        type="text"
+        placeholder="Data inizio (GG/MM/AAAA)"
+        isDate="DD/MM/YYYY"
+        name="dataInizio"
+        inputValue={props.dataInizio}
+        getValueFromInput={props.handleInput}
       />
     </div>
   );

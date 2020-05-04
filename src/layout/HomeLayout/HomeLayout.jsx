@@ -22,7 +22,10 @@ Inseriscili aggiungendo una nuova voce alla nostra lista.
 
 “La curiosità può vincere la paura ancor più di quanto possa fare il coraggio” James Stephens"
       />
-      <TwoBtns />
+      <div className="homepage-layout__two-btns">
+        <TwoBtns />
+      </div>
+
       <ListaLayout />
     </div>
   );

@@ -1,5 +1,9 @@
 import React from "react";
-import { isEmailFormat, isDateFormat } from "../../utils/inputValidation.js";
+import {
+  isEmailFormat,
+  isDateFormat,
+  isValidUrl,
+} from "../../utils/inputValidation.js";
 import "./FormInput.scss";
 
 // HOW TO USE IT
@@ -11,6 +15,7 @@ import "./FormInput.scss";
       onInputChange={something()} // optional
       isRequired // optional
       isEmail // optional
+      isURL // optional
       isMinLength={number} // optional
       isMaxLength={number} // optional
       isDate={dateFormat}   // optional
@@ -25,25 +30,29 @@ class FormInput extends React.Component {
       errors: {
         required: {
           error: false,
-          errorMsg: "Campo richiesto"
+          errorMsg: "Campo richiesto",
         },
         email: {
           error: false,
-          errorMsg: "formato email non valido"
+          errorMsg: "formato email non valido",
         },
         maxLength: {
           error: false,
-          errorMsg: "stringa troppo lunga"
+          errorMsg: "stringa troppo lunga",
         },
         minLength: {
           error: false,
-          errorMsg: "stringa troppo corta"
+          errorMsg: "stringa troppo corta",
         },
         date: {
           error: false,
-          errorMsg: "data non valida, il formato accettato e' gg/mm/aaaa"
-        }
-      }
+          errorMsg: "data non valida, il formato accettato e' gg/mm/aaaa",
+        },
+        url: {
+          error: false,
+          errorMsg: "URL non valido",
+        },
+      },
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -88,54 +97,57 @@ class FormInput extends React.Component {
     }
   };
 
-  handleInputChange = evt => {
+  checkURL = (link) => {
+    if (isValidUrl(link)) {
+      this.setErrorState(false, "url");
+    } else {
+      this.setErrorState(true, "url");
+    }
+  };
+
+  handleInputChange = (evt) => {
     const {
       onInputChange,
       isEmail,
       isMaxLength,
       isMinLength,
       isDate,
-      getValueFromInput
+      getValueFromInput,
     } = this.props;
 
     if (getValueFromInput !== null) {
       getValueFromInput(evt);
     }
 
-    this.setState(
-      {
-        inputTxt: evt.target.value
-      },
-      () => {
-        const { inputTxt } = this.state;
-        if (inputTxt) {
-          this.setErrorState(false, "required");
-        }
-
-        if (isEmail && inputTxt && isEmailFormat(inputTxt)) {
-          this.setErrorState(false, "email");
-        }
-
-        if (isMaxLength) {
-          this.checkMaxLength(isMaxLength, inputTxt);
-        }
-
-        if (isMinLength) {
-          this.checkMinLength(isMinLength, inputTxt);
-        }
-
-        if (isDate && isDateFormat(inputTxt, isDate)) {
-          this.setErrorState(false, "date");
-        }
-
-        if (onInputChange) onInputChange(inputTxt);
+    this.setState({ inputTxt: evt.target.value }, () => {
+      const { inputTxt } = this.state;
+      if (inputTxt) {
+        this.setErrorState(false, "required");
       }
-    );
+
+      if (isEmail && inputTxt && isEmailFormat(inputTxt)) {
+        this.setErrorState(false, "email");
+      }
+
+      if (isMaxLength) {
+        this.checkMaxLength(isMaxLength, inputTxt);
+      }
+
+      if (isMinLength) {
+        this.checkMinLength(isMinLength, inputTxt);
+      }
+
+      if (isDate && isDateFormat(inputTxt, isDate)) {
+        this.setErrorState(false, "date");
+      }
+
+      if (onInputChange) onInputChange(inputTxt);
+    });
   };
 
   handleOnBlur = () => {
     const { inputTxt } = this.state;
-    const { isRequired, isEmail, isDate } = this.props;
+    const { isRequired, isEmail, isDate, isURL } = this.props;
     // isRequired validation
     if (isRequired && !inputTxt) {
       const newStateCopy = { ...this.state };
@@ -147,6 +159,10 @@ class FormInput extends React.Component {
     // isDate validation
     if (isDate) {
       this.checkDate(isDate, inputTxt);
+    }
+    // isURL validation
+    if (isURL) {
+      this.checkURL(inputTxt);
     }
   };
 
@@ -161,17 +177,17 @@ class FormInput extends React.Component {
       isMaxLength,
       isDate,
       inputValue,
-      onKeyPress
+      onKeyPress,
+      isURL,
     } = this.props;
     const {
       inputTxt,
-      errors: { required, email, maxLength, date }
+      errors: { required, email, maxLength, date, url },
     } = this.state;
 
     return (
       <div className="input">
         {/* <label className="input__label" title={title}> */}
-
         <div
           className={`input__field-wrapper ${
             required.error ? "input__field-wrapper--error" : ""
@@ -268,6 +284,17 @@ class FormInput extends React.Component {
           >
             <span className="input__helper-txt--error">
               {date.errorMsg} {isDate.errorMsg}
+            </span>
+          </div>
+        )}
+        {isURL && (
+          <div
+            className={`input__helper-txt__wrapper${
+              inputTxt && url.error ? "--show" : ""
+            }`}
+          >
+            <span className="input__helper-txt--error">
+              {url.errorMsg} {url.errorMsg}
             </span>
           </div>
         )}

@@ -35,10 +35,9 @@ const ListaLayout = () => {
 
   const handleInput = (e) => {
     e.preventDefault();
-    const inputKeyword = e.target.value;
-    if (inputKeyword) {
-      setFilterData({ keyword: inputKeyword });
-    }
+    let inputName = e.target.name;
+    let inputValue = e.target.value;
+    setItemsList({ [inputName]: inputValue });
   };
 
   const selectCategoria = (nomeCategoria, idCategoria) => {
@@ -80,10 +79,18 @@ const ListaLayout = () => {
         filterData.categoria.nome.toLowerCase()
       );
     }
+    //data
+    if (filterData && filterData.dataInizio) {
+      queryRef = listaRef.where("fromDate", ">=", filterData.dataInizio);
+      // how add a date
+      // admin.firestore.Timestamp.fromDate(new Date("December 10, 1815"));
+      // Date.prototype.setMonth();
+      // Date.prototype.setDate();
+      // Date.prototype.setYear();
+    }
 
     queryRef.onSnapshot((snapshot) => {
       const data = [];
-      console.log("filtered data", data);
 
       snapshot.forEach((doc) => {
         data.push({ ...doc.data(), id: doc.id });
@@ -98,7 +105,7 @@ const ListaLayout = () => {
     <div>
       <ListaFilter
         {...filterData}
-        onKeywordChange={handleInput}
+        handleInput={handleInput}
         selectCategoria={selectCategoria}
         listaArrCategorie={CATEGORIE}
         selectCitta={selectCitta}

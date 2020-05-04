@@ -1,4 +1,4 @@
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 
 // Add the Firebase products that you want to use
 import 'firebase/firestore';
@@ -17,5 +17,4 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
 export const db = firebase.firestore();

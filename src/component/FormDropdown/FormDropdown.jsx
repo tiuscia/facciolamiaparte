@@ -66,7 +66,7 @@ class FormDropdown extends React.Component {
               // <span>{console.log(item)}</span>
               <li
                 className={`dropdown__list-item dropdown__list-item${
-                  selectedObj.id === item.id ? "--selected" : ""
+                  selectedObj && selectedObj.id === item.id ? "--selected" : ""
                 }`}
                 key={item.id}
                 onClick={() => this.toggleItem(item.nome, item.id)}

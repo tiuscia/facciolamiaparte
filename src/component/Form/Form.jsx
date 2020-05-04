@@ -20,7 +20,10 @@ const Form = ({
   toDate,
   submitForm,
   dateError,
-  requiredError
+  requiredError,
+  isUrlValidAction,
+  isDateToValidAction,
+  isDateFromValidAction,
 }) => (
   <div className="form">
     <form className="form__input-wrapper" onSubmit={submitForm}>
@@ -46,7 +49,9 @@ const Form = ({
         placeholder="link"
         name="link"
         inputValue={link}
+        isURL
         getValueFromInput={handleInput}
+        onInputChange={isUrlValidAction}
       />
       <FormDropdown
         selectedObj={selectedCategoriaObj}
@@ -76,6 +81,7 @@ const Form = ({
         name="fromDate"
         inputValue={fromDate}
         getValueFromInput={handleInput}
+        onInputChange={isDateFromValidAction}
       />
       <FormInput
         type="text"
@@ -84,6 +90,7 @@ const Form = ({
         name="toDate"
         inputValue={toDate}
         getValueFromInput={handleInput}
+        onInputChange={isDateToValidAction}
       />
       <div className="form__error">
         {requiredError && <span>* Compilare tutti i campi obbligatori: </span>}
