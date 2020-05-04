@@ -134,14 +134,14 @@ class FormLayout extends React.Component {
   }
 
   isDateFromValidAction(inputFromDate) {
-    if (!isDateFormat(inputFromDate)) {
+    if (inputFromDate && !isDateFormat(inputFromDate, "DD/MM/YYYY")) {
       this.setState({ dateFromError: true });
     } else {
       this.setState({ dateFromError: false });
     }
   }
   isDateToValidAction(inputToDate) {
-    if (!isDateFormat(inputToDate)) {
+    if (inputToDate && !isDateFormat(inputToDate, "DD/MM/YYYY")) {
       this.setState({ dateToError: true });
     } else {
       this.setState({ dateToError: false });
