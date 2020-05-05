@@ -115,6 +115,7 @@ class FormLayout extends React.Component {
       categoria: selectedCategoriaObj,
       link: link || "",
       ashtag: ashtag || "",
+      approved: false,
     };
 
     const listaRef = db
