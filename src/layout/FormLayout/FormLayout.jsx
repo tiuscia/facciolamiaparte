@@ -25,14 +25,17 @@ class FormLayout extends React.Component {
       dateError: false,
       urlError: false,
       requiredError: false,
+      isFormSent: false,
     };
     this.handleInput = this.handleInput.bind(this);
     this.selectCitta = this.selectCitta.bind(this);
     this.selectCategoria = this.selectCategoria.bind(this);
     this.isUrlValidAction = this.isUrlValidAction.bind(this);
-    // this.isDateToValidAction = this.isDateToValidAction(this);
-    // this.isDateFromValidAction = this.isDateFromValidAction(this);
     this.submitForm = this.submitForm.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({ isFormSent: false });
   }
 
   submitForm = (event) => {
@@ -106,11 +109,11 @@ class FormLayout extends React.Component {
     let dataToSend = {
       titolo,
       descrizione,
-      // fromDate: admin.firestore.Timestamp.fromDate(
-      //   new Date("April 10, 2020") // fromDate
-      // ),
-      // toDate:
-      //   admin.firestore.Timestamp.fromDate(new Date("December 10, 1815")) || "", // toDate
+      // fromDate:
+      //   db.Timestamp(
+      //     new Date("June 01, 2020") // fromDate
+      //   ) || "",
+      // toDate: db.Timestamp(new Date("June 02, 2020")) || "", // toDate
       citta: selectedCittaObj,
       categoria: selectedCategoriaObj,
       link: link || "",
@@ -124,6 +127,7 @@ class FormLayout extends React.Component {
       .then((ref) => {
         console.log("Added document with ID: ", ref.id);
         this.resetState();
+        this.setState({ isFormSent: true });
       });
 
     console.log("listaRef dati inviati", listaRef);
@@ -143,6 +147,7 @@ class FormLayout extends React.Component {
       dateError: false,
       urlError: false,
       requiredError: false,
+      isFormSent: false,
     });
   }
 
@@ -193,6 +198,7 @@ class FormLayout extends React.Component {
       toDate,
       requiredError,
       dateError,
+      isFormSent,
     } = this.state;
     return (
       <div>
@@ -218,6 +224,7 @@ class FormLayout extends React.Component {
           dateError={dateError}
           requiredError={requiredError}
           isUrlValidAction={this.isUrlValidAction}
+          isFormSent={isFormSent}
         />
       </div>
     );

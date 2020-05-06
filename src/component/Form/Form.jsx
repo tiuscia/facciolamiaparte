@@ -22,106 +22,117 @@ const Form = ({
   dateError,
   requiredError,
   isUrlValidAction,
-  isDateToValidAction,
-  isDateFromValidAction,
+  isFormSent,
 }) => (
-  <div className="form">
-    <form className="form__input-wrapper" onSubmit={submitForm}>
-      <FormInput
-        type="text"
-        placeholder="titolo"
-        name="titolo"
-        isRequired
-        isMaxLength="50"
-        inputValue={titolo}
-        getValueFromInput={handleInput}
-      />
-      <FormInput
-        type="textarea"
-        placeholder="descrizione"
-        name="descrizione"
-        isRequired
-        inputValue={descrizione}
-        getValueFromInput={handleInput}
-      />
-      <FormInput
-        type="text"
-        placeholder="link"
-        name="link"
-        inputValue={link}
-        isURL
-        getValueFromInput={handleInput}
-        onInputChange={isUrlValidAction}
-      />
-      <FormDropdown
-        selectedObj={selectedCategoriaObj}
-        selectItem={selectCategoria}
-        defaultTxt="Seleziona categoria"
-        listArr={listaArrCategorie}
-      />
-      {selectedCategoriaObj && selectedCategoriaObj.nome === "ashtag" && (
-        <FormInput
-          type="text"
-          placeholder="#ashtag"
-          name="#ashtag"
-          inputValue={ashtag}
-          getValueFromInput={handleInput}
-        />
-      )}
-      <FormDropdown
-        selectedObj={selectedCittaObj}
-        selectItem={selectCitta}
-        defaultTxt="Seleziona città"
-        listArr={listaArrCitta}
-      />
-      <FormInput
-        type="text"
-        placeholder="Data Inizio (GG/MM/AAAA)"
-        isDate="DD/MM/YYYY"
-        name="fromDate"
-        inputValue={fromDate}
-        getValueFromInput={handleInput}
-        // onInputChange={isDateFromValidAction}
-      />
-      <FormInput
-        type="text"
-        placeholder="Data Fine (GG/MM/AAAA)"
-        isDate="DD/MM/YYYY"
-        name="toDate"
-        inputValue={toDate}
-        getValueFromInput={handleInput}
-        // onInputChange={isDateToValidAction}
-      />
-      <div className="form__error">
-        {requiredError && <span>* Compilare tutti i campi obbligatori: </span>}
-        {requiredError && !titolo && <span>il titolo è richiesto</span>}
-        {requiredError && !descrizione && (
-          <span>la descrizione è richiesta</span>
-        )}
-        {requiredError && !selectedCategoriaObj.id && (
-          <span>La categoria è richiesta</span>
-        )}
-        {requiredError && !selectedCittaObj.id && (
-          <span>La cittá è richiesta</span>
-        )}
-        {requiredError && selectedCategoriaObj.nome === "ashtag" && !ashtag && (
-          <span>Il campo ashtag è richiesto</span>
-        )}
-        {dateError && fromDate && toDate && (
-          <span>
-            Controllare che la data inizio sia antecedente o uguale a quella di
-            fine
-          </span>
-        )}
-        {dateError && !fromDate && toDate && (
-          <span>Ai ai ai non hai inserito da la data di inizio!</span>
-        )}
+  <>
+    {isFormSent && (
+      <div>
+        L atua parte e' stata inviata. verra' Revisionata ed apporvata il prima
+        possibile.
       </div>
-      <button type="submit">
-        <Btn text="invia" />
-      </button>
-    </form>
-  </div>
+    )}
+    {!isFormSent && (
+      <div className="form">
+        <form className="form__input-wrapper" onSubmit={submitForm}>
+          <FormInput
+            type="text"
+            placeholder="titolo"
+            name="titolo"
+            isRequired
+            isMaxLength="50"
+            inputValue={titolo}
+            getValueFromInput={handleInput}
+          />
+          <FormInput
+            type="textarea"
+            placeholder="descrizione"
+            name="descrizione"
+            isRequired
+            inputValue={descrizione}
+            getValueFromInput={handleInput}
+          />
+          <FormInput
+            type="text"
+            placeholder="link"
+            name="link"
+            inputValue={link}
+            isURL
+            getValueFromInput={handleInput}
+            onInputChange={isUrlValidAction}
+          />
+          <FormDropdown
+            selectedObj={selectedCategoriaObj}
+            selectItem={selectCategoria}
+            defaultTxt="Seleziona categoria"
+            listArr={listaArrCategorie}
+          />
+          {selectedCategoriaObj && selectedCategoriaObj.nome === "ashtag" && (
+            <FormInput
+              type="text"
+              placeholder="#ashtag"
+              name="#ashtag"
+              inputValue={ashtag}
+              getValueFromInput={handleInput}
+            />
+          )}
+          <FormDropdown
+            selectedObj={selectedCittaObj}
+            selectItem={selectCitta}
+            defaultTxt="Seleziona città"
+            listArr={listaArrCitta}
+          />
+          <FormInput
+            type="text"
+            placeholder="Data Inizio (GG/MM/AAAA)"
+            isDate="DD/MM/YYYY"
+            name="fromDate"
+            inputValue={fromDate}
+            getValueFromInput={handleInput}
+            // onInputChange={isDateFromValidAction}
+          />
+          <FormInput
+            type="text"
+            placeholder="Data Fine (GG/MM/AAAA)"
+            isDate="DD/MM/YYYY"
+            name="toDate"
+            inputValue={toDate}
+            getValueFromInput={handleInput}
+            // onInputChange={isDateToValidAction}
+          />
+          <div className="form__error">
+            {requiredError && (
+              <span>* Compilare tutti i campi obbligatori: </span>
+            )}
+            {requiredError && !titolo && <span>il titolo è richiesto</span>}
+            {requiredError && !descrizione && (
+              <span>la descrizione è richiesta</span>
+            )}
+            {requiredError && !selectedCategoriaObj.id && (
+              <span>La categoria è richiesta</span>
+            )}
+            {requiredError && !selectedCittaObj.id && (
+              <span>La cittá è richiesta</span>
+            )}
+            {requiredError &&
+              selectedCategoriaObj.nome === "ashtag" &&
+              !ashtag && <span>Il campo ashtag è richiesto</span>}
+            {dateError && fromDate && toDate && (
+              <span>
+                Controllare che la data inizio sia antecedente o uguale a quella
+                di fine
+              </span>
+            )}
+            {dateError && !fromDate && toDate && (
+              <span>Ai ai ai non hai inserito da la data di inizio!</span>
+            )}
+          </div>
+          <button type="submit">
+            <Btn text="invia" />
+          </button>
+        </form>
+      </div>
+    )}
+  </>
 );
 
 export default Form;
