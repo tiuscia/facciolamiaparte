@@ -19,6 +19,10 @@ const ListaLayout = () => {
   const [isLoading, setIsLoadingt] = useState(true);
 
   useEffect(() => {
+    getAllData();
+  }, []);
+
+  const getAllData = () => {
     const listaRef = db.collection("aggratis");
 
     listaRef.onSnapshot((snapshot) => {
@@ -31,7 +35,7 @@ const ListaLayout = () => {
       setItemsList(data);
       setIsLoadingt(false);
     });
-  }, []);
+  };
 
   const handleInput = (e) => {
     e.preventDefault();
@@ -42,12 +46,25 @@ const ListaLayout = () => {
 
   const selectCategoria = (nomeCategoria, idCategoria) => {
     let selected = { nome: nomeCategoria, id: idCategoria };
+    console.log("selectCategoria", selected);
     setFilterData({ categoria: selected });
   };
 
   const selectCitta = (nomeCitta, idCitta) => {
     let selected = { nome: nomeCitta, id: idCitta };
+    console.log("selectCitta", selected);
     setFilterData({ citta: selected });
+  };
+
+  const resetFormFilters = () => {
+    setFilterData({
+      citta: { nome: "", id: "" },
+      keyword: "",
+      dataInizio: "",
+      dataFine: "",
+      categoria: { nome: "", id: "" },
+    });
+    getAllData();
   };
 
   const getResults = () => {
@@ -57,6 +74,7 @@ const ListaLayout = () => {
     let queryRef;
     // citta
     if (filterData && filterData.citta && filterData.citta.nome) {
+      console.log("FILTER BY CITTA", filterData.citta);
       queryRef = listaRef.where(
         "citta.nome",
         "==",
@@ -112,6 +130,7 @@ const ListaLayout = () => {
         listaArrCitta={CITTA}
       />
       <button onClick={getResults}>filtra</button>
+      <button onClick={resetFormFilters}>reset filters</button>
       <ListaRisultati isLoading={isLoading} itemsList={itemsList} />
     </div>
   );

@@ -163,12 +163,12 @@ class FormLayout extends React.Component {
   }
 
   selectCitta(nomeCitta, idCitta) {
-    let selected = { nome: nomeCitta, id: idCitta };
+    let selected = { nome: nomeCitta.toLowerCase(), id: idCitta };
     this.setState({ selectedCittaObj: selected });
   }
 
   selectCategoria(nomeCategoria, idCategoria) {
-    let selected = { nome: nomeCategoria, id: idCategoria };
+    let selected = { nome: nomeCategoria.toLowerCase(), id: idCategoria };
     this.setState({ selectedCategoriaObj: selected });
   }
 
